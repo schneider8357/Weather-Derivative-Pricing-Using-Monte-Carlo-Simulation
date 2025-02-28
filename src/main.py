@@ -1,13 +1,13 @@
 import pandas as pd
 from flask import Flask, render_template, request, jsonify
-from src.monte_carlo_simulation import MonteCarloSimulation
-from src.weather_derivative_pricing import WeatherDerivativePricing
+from monte_carlo_simulation import MonteCarloSimulation
+from weather_derivative_pricing import WeatherDerivativePricing
 
 app = Flask(__name__)
 
 def run_simulation(weather_param, days_to_simulate=30, strike_price=50, payout_rate=100, derivative_type='HDD'):
     # Load historical weather data
-    historical_data = pd.read_csv('data/historical_weather_data.csv')
+    historical_data = pd.read_csv('../data/historical_weather_data_novo.csv')
 
     # Initialize Monte Carlo Simulation
     mc_simulation = MonteCarloSimulation(historical_data)
@@ -33,10 +33,10 @@ def api_simulation():
         return jsonify({'error': 'Invalid input'}), 400
     
     # You can adjust these parameters as needed or pass them through the POST request
-    days_to_simulate = 30
-    strike_price = 50
+    days_to_simulate = 183
+    strike_price = 2000
     payout_rate = 100
-    derivative_type = 'HDD'  # or 'CDD' depending on your use case
+    derivative_type = 'CDD'  # or 'CDD' depending on your use case
 
     try:
         derivative_price = run_simulation(weather_param, days_to_simulate, strike_price, payout_rate, derivative_type)
