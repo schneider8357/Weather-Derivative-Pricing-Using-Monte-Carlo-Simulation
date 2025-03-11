@@ -31,18 +31,18 @@ def api_simulation():
     weather_param = data.get('weather_param', None)
     if weather_param is None:
         return jsonify({'error': 'Invalid input'}), 400
-    
-    # You can adjust these parameters as needed or pass them through the POST request
-    days_to_simulate = 183
-    strike_price = 2000
-    payout_rate = 100
-    derivative_type = 'CDD'  # or 'CDD' depending on your use case
 
-    try:
+    result = []
+    for i in range(100):
+        days_to_simulate = 91
+        strike_price = 800 + i * 10
+        payout_rate = 1
+        derivative_type = 'CDD'  # or 'CDD' depending on your use case
         derivative_price = run_simulation(weather_param, days_to_simulate, strike_price, payout_rate, derivative_type)
-        return jsonify({'result': derivative_price})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        result.append(derivative_price)
+    return jsonify({'result': result})
+    # except Exception as e:
+        # return jsonify({'error': str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)

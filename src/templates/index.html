@@ -82,7 +82,7 @@ button:hover {
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById('result').innerText = `Simulation Result: ${data.result.toFixed(2)}`;
+        document.getElementById('result').innerText = `Simulation Result: ${data.result}`;
     })
     .catch(error => {
         document.getElementById('result').innerText = `Error: ${error}`;
